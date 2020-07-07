@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Release Testing">
+	<test name="EVO Epics">
+		<classes>
+			<class name="tests.EVO_Epics" />
+			<class name="tests.Epic_Q" />
+		</classes>
+	</test>
+
+</suite>
