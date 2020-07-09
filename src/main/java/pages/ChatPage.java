@@ -114,7 +114,6 @@ public class ChatPage extends PageBase
 			WebElement actualSayLemma = driver.findElement(By.xpath(xpath));
 			
 			
-			
 			//If Condition that manages TOBi's Column in the Excel Sheet
 			if (ExcelReader.getCellData(i, 2).contains("incident_id"))
 			{
@@ -179,6 +178,17 @@ public class ChatPage extends PageBase
 				Assert.assertEquals(driver.findElement(By.xpath(xpath + "//a")).getAttribute("href"), ExcelReader.getCellData(i, 4));
 			}
 			
+		
+			//If Condition that manages hint message in text box
+			if (ExcelReader.getCellData(i, 5) == "")
+			{
+				//Cell in the Excel Sheet will be skipped	
+			}
+			
+			else
+			{
+				Assert.assertEquals(driver.findElement(By.xpath("//textarea[@placeholder]")).getAttribute("placeholder"), ExcelReader.getCellData(i, 5));
+			}		
 		}
 		
 		DocReader doc = new DocReader();

@@ -79,7 +79,7 @@ public class EVO_Epics extends TestBase
 	}
 	
 	@AfterMethod (enabled = true)
-	public void closeDriver()
+	public void userLogout()
 	{
 		quitDriver();
 	}
