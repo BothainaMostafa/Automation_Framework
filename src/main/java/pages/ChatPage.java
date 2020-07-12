@@ -47,6 +47,8 @@ public class ChatPage extends PageBase
 	@FindBy (xpath = "//div[@class='Messages__container']")
 	WebElement messageBody;
 	
+	@FindBy (xpath = "//div[@class='ChatInput__helper powered-by-amelia']")
+	WebElement disclaimerMessage;
 	
 	public void assertAmeliaSayLemma(WebElement actualSayLemma, String expectedSaylemma) throws InterruptedException
 	{
@@ -75,8 +77,6 @@ public class ChatPage extends PageBase
 			previewButton.getLocation();
 			previewButton.click();
 			wait.until(ExpectedConditions.visibilityOf(pdfName));
-			System.out.println(pdfName.getText());
-			System.out.println(expectedSaylemma);
 			Assert.assertEquals(pdfName.getText(), expectedSaylemma);
 			closePDFButton.click();
 		}
@@ -97,7 +97,6 @@ public class ChatPage extends PageBase
 		Matcher matcher = pattern.matcher(ticketSayLemma);
 		if (matcher.find())
 		{
-			System.out.println(matcher.group(0));
 			ExcelReader.writeDataInCell(matcher.group(0));
 		}
 	}
@@ -124,7 +123,19 @@ public class ChatPage extends PageBase
 			{
 				assertAmeliaSayLemma(actualSayLemma, ExcelReader.getCellData(i, 2));
 			}
-
+			
+			
+			//If Condition that manages hint message in text box
+			if (ExcelReader.getCellData(i, 5) == "")
+			{
+				//Cell in the Excel Sheet will be skipped	
+			} 
+			
+			else
+			{
+				Assert.assertEquals(driver.findElement(By.xpath("//textarea[@placeholder]")).getAttribute("placeholder"), ExcelReader.getCellData(i, 5));
+			}	
+			
 			
 			//If Condition that manages User's Column in the Excel Sheet
 			if (ExcelReader.getCellData(i, 1) == "")
@@ -136,7 +147,6 @@ public class ChatPage extends PageBase
 			{
 				String buttonGeneric = ExcelReader.getCellData(i, 1);
 				String [] buttonParts = buttonGeneric.split("_");
-				System.out.println(buttonParts[1]);
 
 				String buttonIdGeneric = "name-%s";
 				String buttonId = String.format(buttonIdGeneric, buttonParts[1]);
@@ -175,20 +185,8 @@ public class ChatPage extends PageBase
 			
 			else
 			{
-				Assert.assertEquals(driver.findElement(By.xpath(xpath + "//a")).getAttribute("href"), ExcelReader.getCellData(i, 4));
-			}
-			
-		
-			//If Condition that manages hint message in text box
-			if (ExcelReader.getCellData(i, 5) == "")
-			{
-				//Cell in the Excel Sheet will be skipped	
-			}
-			
-			else
-			{
-				Assert.assertEquals(driver.findElement(By.xpath("//textarea[@placeholder]")).getAttribute("placeholder"), ExcelReader.getCellData(i, 5));
-			}		
+					Assert.assertEquals(driver.findElement(By.xpath(xpath + "//a")).getAttribute("href"), ExcelReader.getCellData(i, 4));
+			}	
 		}
 		
 		DocReader doc = new DocReader();
