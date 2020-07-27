@@ -16,12 +16,12 @@ public class EVO_Epics extends TestBase
 	@BeforeMethod
 	public void userLogin() throws Exception
 	{
-		startChromeDriver();
+		startFirefoxDriver();
 		userLoginObject = new UserLoginPage(driver);
 		ExcelReader.setExcelFile(System.getProperty("user.dir")+"//EVO Epics//Login Data.xlsx", "Login Data");
 		userLoginObject.userLogin(ExcelReader.getCellData(1, 0), ExcelReader.getCellData(1, 1), ExcelReader.getCellData(1,2), ExcelReader.getCellData(1,3));
 	}
-
+	
 	@Test (enabled = true, priority = 1)
 	public void evoEpics_TC1() throws Exception
 	{
